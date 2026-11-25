@@ -15,6 +15,10 @@ ENTRY = "pingraze \u2014 To repeatedly skim notifications without opening or act
 
 
 def main() -> None:
+    # Gate check, mirroring the sealed scorer: one line, 1-140 chars.
+    lines = ENTRY.splitlines()
+    if len(lines) != 1 or not 1 <= len(ENTRY) <= 140:
+        raise ValueError("entry must be a single line of 1-140 characters")
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
